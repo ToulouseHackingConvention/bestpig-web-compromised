@@ -23,6 +23,8 @@ EXPOSE 80
 
 RUN service php7.0-fpm restart
 
+RUN chown -R www-data:www-data "${SRC}"
+
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 RUN (cd $SRC; zip -r sources.zip admin.php assets/ base/ *.php)

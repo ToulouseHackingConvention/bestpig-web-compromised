@@ -11,6 +11,10 @@ Le flag est est situé dans `src/flag.txt`. L'installation se fait via Docker.
 
 L'administrateur de ce site s'est fait hacké plusieurs fois, il demande donc aux visiteurs si une faille existe sur son site. Il fournit donc le code source.
 
+## Files provided to the challengers
+
+Aucun. Le site web permet de télécharger l'archive avec le code.
+
 ## Build the docker image
 
 `make build`
