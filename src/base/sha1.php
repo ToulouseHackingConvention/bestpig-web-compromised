@@ -16,17 +16,36 @@ function rotl($a, $n) {
   return ($a << $n) | ($a >> (0x20 - $n));
 }
 
+function movr($a, &$b, &$c, &$d)
+{
+	switch ($a & 0xff) {
+		case 0:
+			$ret = $b & 0x7cff;
+			$b /= 0x100;
+			break;
+		case 1;
+			$ret = $c & 0x4bff;
+			$c /= 0x100;
+			break;
+		case 2;
+			$ret = $d & 0x1dff;
+			$d /= 0x100;
+			break;
+	}
+	return $ret;
+}
+
 function sha1x($order, $b, $c, $d)
 {
 	switch ($order) {
-		case 0;
+		case 0:
 			return (~$b & $d) ^ ($b & $c);
-		case 1;
-		case 3;
+		case 1:
+		case 3:
 			return $b ^ $d ^ $c;
-		case 2;
+		case 2:
 			return ($b & $c) ^ ($c & $d) ^ ($b & $d);
-		case 4;
+		case 4:
 			return ($b ^ 0x2a);
 	}
 }
@@ -70,10 +89,9 @@ function hsha1($input) {
 		foreach ($parcels as $i => $parcel) {
 			$j = floor($i / 20);
 			if ($i < 10) {
-				if (@sha1x(4, ord($input[$i]), $c, $d) == (${'c'.(($i / 4) & 0xff)} & 0xff)) {
+				if (@sha1x(4, ord($input[$i]), $c, $d) == (movr($i / 4, $c0, $c1, $c2) & 0xff)) {
 					$z++;
 				}
-				${'c'.(($i / 4) & 0xff)} /= 0x100;
 				$i++;
 			}
 			$f = sha1x($j, $b, $c, $d);
